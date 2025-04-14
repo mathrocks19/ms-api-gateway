@@ -1,5 +1,5 @@
 import * as bcrypt from 'bcrypt';
-import { IEncrypt } from '../iencrypt.interface';
+import { IEncrypt } from '../encrypt.interface';
 
 export class BcryptProvider implements IEncrypt {
   /**

@@ -1,7 +1,7 @@
 import amqp from "amqplib";
 import { v4 as uuidv4 } from 'uuid';
 import { ErroCustom } from "../../../../errors/error-custom";
-import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IResponseAccessResponse } from "../imessager-broker-access.interface";
+import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IResponseAccessResponse } from "../message-broker-access.interface";
 
 export class RabbitMQ implements IMessagerBrokerAccess {
 

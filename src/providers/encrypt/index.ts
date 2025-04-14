@@ -1,4 +1,4 @@
-import { BcryptProvider } from "./implemantation/bcrypt.provider";
+import { BcryptProvider } from "./implementation/bcrypt.provider";
 
 const encrypt = new BcryptProvider();
 

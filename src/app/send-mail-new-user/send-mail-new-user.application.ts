@@ -1,5 +1,5 @@
-import { IMailAccess } from "../../providers/mail/imail-access.interface";
-import { ISendMailNewUserDTO } from "./isend-mail-new-user-dto.interface";
+import { IMailAccess } from "../../providers/mail/email-access.interface";
+import { ISendMailNewUserDTO } from "./send-mail-new-user-dto.interface";
 
 export class SendMailNewUserApplication {
     constructor(private readonly mailAccess: IMailAccess) {}

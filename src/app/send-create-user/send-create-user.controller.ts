@@ -1,4 +1,4 @@
-import { IMessagerAccessRequest, IResponseAccessResponse } from "../../providers/messager-broker-access/implementations/imessager-broker-access.interface";
+import { IMessagerAccessRequest, IResponseAccessResponse } from "../../providers/message-broker-access/implementations/imessager-broker-access.interface";
 import { CreateUserApplication } from "./create-user.application";
 
 export class CreateUserController {

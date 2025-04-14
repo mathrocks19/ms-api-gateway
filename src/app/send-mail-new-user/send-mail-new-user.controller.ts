@@ -1,4 +1,4 @@
-import { IMessagerAccessRequest, IResponseAccessResponse } from "../../providers/messager-broker-access/implementations/imessager-broker-access.interface";
+import { IMessagerAccessRequest, IResponseAccessResponse } from "../../providers/message-broker-access/implementations/imessager-broker-access.interface";
 import { SendMailNewUserApplication } from "./send-mail-new-user.application";
 
 export class SendMailNewUserController {
