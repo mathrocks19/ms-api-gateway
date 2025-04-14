@@ -1,17 +1,21 @@
-import { Request, Response } from "express";
-import { SendCreateUserApplication } from "./send-create-user.application";
+import { IMessagerAccessRequest, IResponseAccessResponse } from "../../providers/messager-broker-access/implementations/imessager-broker-access.interface";
+import { CreateUserApplication } from "./create-user.application";
 
-export class SendCreateUserController {
-    constructor(private readonly sendCreateUser: SendCreateUserApplication) { }
-    async handle(req: Request, resp: Response): Promise<Response> {
-        const { name, email, password, cellPhone } = req.body;
-        const { code, response } = await this.sendCreateUser.handle({
-            name,
-            email,
-            password,
-            cellPhone
-        });
-        return resp.status(code).send(response);
+export class CreateUserController {
+    constructor(private readonly createUserApp: CreateUserApplication) { }
+
+    /**
+     * Handle
+     * @param req
+     * @returns
+     */
+    async handle(req: IMessagerAccessRequest): Promise<IResponseAccessResponse> {
+        await this.createUserApp.execute(req.body);
+        return {
+            code: 201,
+            response: {
+                message: 'Usuário cadastrado com sucesso!'
+            }
+        }
     }
 }
-

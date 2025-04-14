@@ -1,12 +1,15 @@
 import { RabbitMQ } from "../../providers/messager-broker-access/implementations/rabbit-mq/rabbit-mq.provider";
-import { SendCreateUserApplication } from "./send-create-user.application";
-import { SendCreateUserController } from "./send-create-user.controller";
+import { CreateUserApplication } from "./create-user.application";
+import { CreateUserController } from "./create-user.controller";
+import { UserEntity } from "./../../models/user/user.entity";
+import { encrypt } from "../../providers/encrypt";
 
-const messagerBroker = new RabbitMQ();
-const sendCreateUserApp = new SendCreateUserApplication(messagerBroker);
-const sendCreateUserController = new SendCreateUserController(sendCreateUserApp);
+const messagerBrokerAccess = new RabbitMQ();
+const createUserApp = new CreateUserApplication(
+    messagerBrokerAccess,
+    UserEntity,
+    encrypt
+);
+const createUserController = new CreateUserController(createUserApp);
 
-export { sendCreateUserApp, sendCreateUserController }
-
-//curl --request POST --url 'http://localhost:3000/user' --header 'Content-Type: application/json' --data '{"name": "User Teste", "email": "email@teste.com", "password": "senha_fraca", "cellPhone": "+55999999999"}'
-
+export { createUserApp, createUserController }
