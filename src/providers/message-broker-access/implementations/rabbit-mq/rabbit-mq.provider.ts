@@ -1,7 +1,6 @@
 import amqp from "amqplib";
 import { v4 as uuidv4 } from 'uuid';
-import { ErroCustom } from "../../../../errors/error-custom";
-import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IResponseAccessResponse } from "../message-broker-access.interface";
+import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IResponseAccessResponse } from "../imessager-broker-access.interface";
 
 export class RabbitMQ implements IMessagerBrokerAccess {
 
@@ -16,8 +15,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Listen RPC
-     * @param queue
-     * @param callback
+     * @param queue 
+     * @param callback 
      */
     listenRPC(queue: string, callback: CallableFunction) {
         this.connect()
@@ -25,28 +24,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
             .then(ch => {
                 ch.consume(queue, async (msg: any) => {
                     if (msg !== null) {
-                        let response = null;
                         const request = this.messageConvertRequest(msg);
-                        try {
-                            response = await callback(request);
-                        } catch (err: any) {
-                            if (err instanceof ErroCustom) {
-                                const error = JSON.parse(err.message);
-                                response = {
-                                    code: error.code,
-                                    response: {
-                                        message: error.error
-                                    }
-                                }
-                            } else {
-                                response = {
-                                    code: 500,
-                                    response: {
-                                        message: 'Internal server error'
-                                    }
-                                }
-                            }
-                        }
+                        const response = await callback(request);
                         await this.responseCallRPC({
                             queue: queue,
                             replyTo: msg.properties.replyTo,
@@ -61,8 +40,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Create
-     * @param channel
-     * @param queue
+     * @param channel 
+     * @param queue 
      */
     async createQueue(channel: any, queue: string): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -77,7 +56,7 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Send Pub/Sub
-     * @param queue
+     * @param queue 
      */
     async sendPubSub(message: IMessagerAccess): Promise<any> {
         return this.connect()
@@ -93,7 +72,7 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Send RPC
-     * @param message
+     * @param message 
      */
     async sendRPC(message: IMessagerAccess): Promise<IResponseAccessResponse> {
         const timeout = 5000;
@@ -149,8 +128,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Convert Message
-     * @param message
-     * @returns
+     * @param message 
+     * @returns 
      */
     messageConvert(message: any): IResponseAccessResponse {
         const messageResponse: IResponseAccessResponse = {
@@ -174,8 +153,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Message Convert Request
-     * @param message
-     * @returns
+     * @param message 
+     * @returns 
      */
     messageConvertRequest(message: any): IMessagerAccessRequest {
         const messageRequest: IMessagerAccessRequest = {
@@ -195,10 +174,10 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Response RPC
-     * @param replyTo
-     * @param correlationId
-     * @param response
-     * @returns
+     * @param replyTo 
+     * @param correlationId 
+     * @param response 
+     * @returns 
      */
     async responseCallRPC(objResponse: {
         queue: string,

@@ -1,9 +1,3 @@
-import { MailTrap } from "../../providers/mail/implementations/mailtrap.provider";
-import { SendMailNewUserApplication } from "./send-mail-new-user.application";
-import { SendMailNewUserController } from "./send-mail-new-user.controller";
+import { app } from "./providers/web-server";
 
-const mailTrap = new MailTrap();
-const sendMailNewUserApplication = new SendMailNewUserApplication(mailTrap);
-const sendMailNewUserController = new SendMailNewUserController(sendMailNewUserApplication);
-
-export { sendMailNewUserController, sendMailNewUserApplication }
+app.listen(3000, () => console.log('WebServer is running...'));

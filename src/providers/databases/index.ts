@@ -1,1 +1,0 @@
-import "./implementations/sequelize.provider";
