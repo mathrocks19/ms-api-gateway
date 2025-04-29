@@ -28,4 +28,4 @@ EXPOSE 3000
 # Comando para iniciar a aplicação
 # VERIFIQUE ESTE CAMINHO! Ele deve apontar para o arquivo JS principal que inicia seu servidor web, dentro da pasta 'dist'.
 # Pode ser dist/index.js, dist/main.js, dist/src/web-server/index.js, etc.
-CMD [ "node", "dist/src/web-server/index.js" ]
+CMD [ "node", "dist/index.js" ]

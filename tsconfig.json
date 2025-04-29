@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+      /* Basic Options */
+      "target": "es2016",                       // Compila para uma versão do JS compatível com Node.js mais antigos/LTS
+      "module": "commonjs",                     // Usa o sistema de módulos padrão do Node.js
+      "outDir": "./dist",                       // <-- IMPORTANTE: Salva os arquivos .js compilados na pasta 'dist'
+      "rootDir": "./src",                       // <-- Onde está seu código .ts original
+  
+      /* Strict Type-Checking Options */
+      "strict": true,                           // Habilita checagens de tipo mais rigorosas (recomendado)
+  
+      /* Module Resolution Options */
+      "esModuleInterop": true,                 
+  
+      /* Advanced Options */
+      "skipLibCheck": true,                     // Pula a checagem de tipos em arquivos de declaração (acelera compilação)
+      "forceConsistentCasingInFileNames": true  // Garante que os nomes de arquivos sejam consistentes no case
+    },
+    "include": ["src/**/*"],                 
+    "exclude": ["node_modules", "**/*.spec.ts"] 
+  }
+  
+  
