@@ -1,34 +1,61 @@
-version: "3.3"
+version: "3.8"
 
 services:
+  # --- SERVIÇO API GATEWAY (NODE.JS) ---
+  api-gateway:             # Nome do serviço Node.js
+    container_name: ms-api-gateway # Nome do container
+    build: .             
+    ports:
+      - "3000:3000"        
+    environment:           
+      - NODE_ENV=development
+      - PORT=3000          
+      - DATABASE_URL=mysql://swm_user:senha@mysql:3306/swm_database
+
+      - RABBITMQ_URL=amqp://guest:guest@rabbit:5672
+     
+    networks:             
+      - swmnetwork
+    depends_on:            
+      - mysql
+      - rabbit
+    restart: always       
+
+ 
   mysql:
     container_name: swm-mysql
     restart: always
     image: mysql:8.0
-    networks:
+    networks:              
       - swmnetwork
     ports:
-      - "3307:3306"
+      - "3307:3306"        
     volumes:
       - ./volumes/mysql:/var/lib/mysql
     environment:
       MYSQL_ROOT_PASSWORD: RootPasswordGiovani!
-      MYSQL_DATABASE: swm_database # Opcional: cria um banco de dados inicial
-      MYSQL_USER: swm_user # Opcional: cria um usuário específico
-      MYSQL_PASSWORD: senha # Opcional: senha para o usuário específico
+      MYSQL_DATABASE: swm_database
+      MYSQL_USER: swm_user
+      MYSQL_PASSWORD: senha 
+
 
   rabbit:
     container_name: swm-rabbit
     restart: always
     image: rabbitmq:3-management
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "5672:5672"        # Porta AMQP
+      - "15672:15672"      # Porta da interface web de gerenciamento
     volumes:
-      - ./volumes/rabbit:/data
-    networks:
+      
+      - ./volumes/rabbit:/var/lib/rabbitmq 
+      
+    networks:              
       - swmnetwork
+   
 
+# --- REDE 
 networks:
   swmnetwork:
     driver: bridge
+

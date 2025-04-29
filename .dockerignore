@@ -1,0 +1,22 @@
+# Ignorar dependências do Node (serão instaladas dentro do container)
+node_modules
+
+# Ignorar pastas de volumes montados (causa do erro atual!)
+volumes/
+
+# Ignorar pasta de build do TypeScript (será gerada dentro do container)
+dist
+
+# Ignorar arquivos de log e debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignorar arquivos específicos de IDEs e Git
+.idea
+.vscode
+.git
+.gitignore
+
+# Ignorar arquivos de ambiente (se houver - geralmente não devem ir para a imagem)
+.env*

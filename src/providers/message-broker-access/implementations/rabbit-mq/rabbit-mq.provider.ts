@@ -197,3 +197,5 @@ export class RabbitMQ implements IMessagerBrokerAccess {
             .catch(err => console.log(err));
     }
 }
+
+export { IMessagerBrokerAccess };

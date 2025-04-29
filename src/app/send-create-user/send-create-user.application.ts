@@ -1,4 +1,4 @@
-import { IMessagerBrokerAccess } from "../../providers/messager-broker-access/implementations/imessager-broker-access.interface";
+import { IMessagerBrokerAccess } from "../../providers/message-broker-access/implementations/rabbit-mq/rabbit-mq.provider";
 import { ISendCreateUserDTO } from "./isend-create-user-dto.interface";
 
 export class SendCreateUserApplication {
