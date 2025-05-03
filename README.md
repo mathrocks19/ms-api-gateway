@@ -1,5 +1,3 @@
-# TrabProgWebII_08_04_2025
-
 # Microsserviço: API Gateway
 
 Recebe requisições HTTP (ex: POST /user) e as envia via RPC/RabbitMQ.
@@ -7,24 +5,37 @@ Recebe requisições HTTP (ex: POST /user) e as envia via RPC/RabbitMQ.
 ## Requisitos
 
 *   Docker & Docker Compose
-*   Node.js/npm (para build)
+*   Node.js/npm (usado pelo build do Docker e para rodar outros MS)
 
-## Para Rodar (Gateway + DB + RabbitMQ)
+## Para Rodar Tudo
 
-1.  Na pasta `ms-api-gateway`:
-    ```bash
-    docker-compose up -d --build
-    ```
-2.  **Importante:** Inicie `ms-api-user` e `ms-notification` separadamente (com `npm run start:dev`).
+1.  **Iniciar Docker (Gateway + MySQL + RabbitMQ):**
+    *   Na pasta `ms-api-gateway`:
+        ```bash
+        docker-compose up -d --build
+        ```
+2.  **Iniciar `ms-api-user`:**
+    *   Configure o arquivo `.env` na raiz do `ms-api-user` (DB MySQL, Rabbit URL=`localhost`).
+    *   Abra um terminal na pasta `ms-api-user`.
+    *   Instale dependências (se necessário): `npm install`
+    *   Execute: `npm run start:dev`
+3.  **Iniciar `ms-notification`:**
+    *   Configure o arquivo `.env` na raiz do `ms-notification` (com credenciais **Mailtrap**).
+    *   Abra outro terminal na pasta `ms-notification`.
+    *   Instale dependências (se necessário): `npm install`
+    *   Execute: `npm run start:dev`
 
-## Para Parar
+## Para Parar Tudo
 
-1.  Na pasta `ms-api-gateway`:
-    ```bash
-    docker-compose down
-    ```
-    *(Use `docker-compose down -v` para apagar os dados também).*
+1.  **Parar Docker:**
+    *   Na pasta `ms-api-gateway`:
+        ```bash
+        docker-compose down
+        ```
+        *(Use `-v` para apagar dados).*
+2.  **Parar Serviços Node:** Use `Ctrl+C` nos terminais onde `ms-api-user` e `ms-notification` estão rodando.
 
-## Teste
+## Teste (Após tudo rodar)
 
-*   Após tudo rodar, envie `POST http://localhost:3000/user` (com JSON no body) via Postman.
+*   Envie `POST http://localhost:3000/user` (com JSON no body) via Postman.
+*   Verifique a resposta (`201 Created`), o banco MySQL (porta 3307) e o Mailtrap.
