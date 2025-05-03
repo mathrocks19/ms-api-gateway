@@ -25,45 +25,45 @@ export interface IMessagerBrokerAccess {
 
     /**
      * Create Queue
-     * @param channel 
-     * @param queue 
+     * @param channel
+     * @param queue
      */
     createQueue(channel: any, queue: string): Promise<any>;
 
     /**
      * Listen RPC Queue
-     * @param queue 
-     * @param callback 
+     * @param queue
+     * @param callback
      */
-     listenRPC(queue: string, callback: CallableFunction): void;
+    listenRPC(queue: string, callback: CallableFunction): void;
 
     /**
      * Send Pub/Sub
-     * @param message 
+     * @param message
      */
     sendPubSub(message: IMessagerAccess): Promise<any>;
 
     /**
      * Send RPC
-     * @param message 
+     * @param message
      */
     sendRPC(message: IMessagerAccess): Promise<IResponseAccessResponse>;
 
     /**
      * Response RPC
-     * @param objResponse 
+     * @param objResponse
      */
     responseCallRPC(objResponse: { queue: string; replyTo: string, correlationId: string, response: IResponseAccessResponse }): Promise<void>;
 
     /**
      * Message Convert
-     * @param message 
+     * @param message
      */
     messageConvert(message: any): IResponseAccessResponse;
 
     /**
      * Message Request
-     * @param message 
+     * @param message
      */
     messageConvertRequest(message: any): IMessagerAccessRequest;
 }

@@ -1,5 +1,5 @@
 import express from "express";
-import { UserRouter } from "./routes-http/user-routes"
+import { UserRouter } from "./routes-http/user-routes";
 
 export interface IRouterHttp {
     handle(router: express.Router): void

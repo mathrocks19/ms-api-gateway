@@ -1,4 +1,4 @@
-import { IMessagerBrokerAccess } from "../../providers/message-broker-access/implementations/rabbit-mq/rabbit-mq.provider";
+import { IMessagerBrokerAccess } from "../../providers/message-broker-access/implementations/imessager-broker-access.interface";
 import { ISendCreateUserDTO } from "./isend-create-user-dto.interface";
 
 export class SendCreateUserApplication {
@@ -6,7 +6,7 @@ export class SendCreateUserApplication {
 
     /**
      * Handle
-     * @param userSend 
+     * @param userSend
      */
     async handle(userSend: ISendCreateUserDTO): Promise<{code: number, response: any}> {
         return await this.messagerBroker.sendRPC({

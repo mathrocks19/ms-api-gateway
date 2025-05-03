@@ -7,16 +7,16 @@ export class SendCreateUserController {
 
     /**
      * Handle
-     * @param req 
-     * @param resp 
+     * @param req
+     * @param resp
      */
     async handle(req: Request, resp: Response): Promise<Response> {
         const { name, email, password, cellPhone } = req.body;
-        const { code, response } = await this.sendCreateUser.handle({ 
-            name, 
-            email, 
-            password, 
-            cellPhone 
+        const { code, response } = await this.sendCreateUser.handle({
+            name,
+            email,
+            password,
+            cellPhone
         });
         return resp.status(code).send(response);
     }

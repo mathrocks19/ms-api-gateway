@@ -1,10 +1,13 @@
 import amqp from "amqplib";
 import { v4 as uuidv4 } from 'uuid';
+import 'dotenv/config';
 import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IResponseAccessResponse } from "../imessager-broker-access.interface";
 
 export class RabbitMQ implements IMessagerBrokerAccess {
 
-    private url: string = 'amqp://guest:guest@localhost:5672';
+    // No topo do arquivo: import 'dotenv/config'; (se não estiver lá) ou confie no Docker env
+// ...
+    private url: string = process.env.RABBITMQ_URL || 'amqp://guest:guest@rabbit:5672'; // <-- Lê do ENV definido no compose
 
     /**
      * Connect with messager broker
@@ -15,8 +18,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Listen RPC
-     * @param queue 
-     * @param callback 
+     * @param queue
+     * @param callback
      */
     listenRPC(queue: string, callback: CallableFunction) {
         this.connect()
@@ -40,8 +43,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Create
-     * @param channel 
-     * @param queue 
+     * @param channel
+     * @param queue
      */
     async createQueue(channel: any, queue: string): Promise<any> {
         return new Promise((resolve, reject) => {
@@ -56,7 +59,7 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Send Pub/Sub
-     * @param queue 
+     * @param queue
      */
     async sendPubSub(message: IMessagerAccess): Promise<any> {
         return this.connect()
@@ -72,7 +75,7 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Send RPC
-     * @param message 
+     * @param message
      */
     async sendRPC(message: IMessagerAccess): Promise<IResponseAccessResponse> {
         const timeout = 5000;
@@ -92,9 +95,9 @@ export class RabbitMQ implements IMessagerBrokerAccess {
             ch.sendToQueue(
                 message.queue,
                 Buffer.from(JSON.stringify(message.message)), {
-                correlationId: corr,
-                replyTo: q.queue
-            });
+                    correlationId: corr,
+                    replyTo: q.queue
+                });
 
             // listen responde of queue
             ch.consume(q.queue, (msg: any) => {
@@ -128,8 +131,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Convert Message
-     * @param message 
-     * @returns 
+     * @param message
+     * @returns
      */
     messageConvert(message: any): IResponseAccessResponse {
         const messageResponse: IResponseAccessResponse = {
@@ -153,8 +156,8 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Message Convert Request
-     * @param message 
-     * @returns 
+     * @param message
+     * @returns
      */
     messageConvertRequest(message: any): IMessagerAccessRequest {
         const messageRequest: IMessagerAccessRequest = {
@@ -174,10 +177,10 @@ export class RabbitMQ implements IMessagerBrokerAccess {
 
     /**
      * Response RPC
-     * @param replyTo 
-     * @param correlationId 
-     * @param response 
-     * @returns 
+     * @param replyTo
+     * @param correlationId
+     * @param response
+     * @returns
      */
     async responseCallRPC(objResponse: {
         queue: string,
@@ -197,5 +200,3 @@ export class RabbitMQ implements IMessagerBrokerAccess {
             .catch(err => console.log(err));
     }
 }
-
-export { IMessagerBrokerAccess };
