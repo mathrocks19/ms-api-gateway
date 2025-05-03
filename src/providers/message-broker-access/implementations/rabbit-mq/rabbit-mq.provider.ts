@@ -5,9 +5,9 @@ import { IMessagerAccess, IMessagerAccessRequest, IMessagerBrokerAccess, IRespon
 
 export class RabbitMQ implements IMessagerBrokerAccess {
 
-    // No topo do arquivo: import 'dotenv/config'; (se não estiver lá) ou confie no Docker env
+
 // ...
-    private url: string = process.env.RABBITMQ_URL || 'amqp://guest:guest@rabbit:5672'; // <-- Lê do ENV definido no compose
+    private url: string = process.env.RABBITMQ_URL || 'amqp://guest:guest@rabbit:5672';
 
     /**
      * Connect with messager broker
@@ -125,7 +125,7 @@ export class RabbitMQ implements IMessagerBrokerAccess {
                     });
                 }
             }, timeout);
-            // before X seconds
+
         })
     }
 
