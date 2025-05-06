@@ -19,4 +19,4 @@ yarn-error.log*
 .gitignore
 
 # Ignorar arquivos de ambiente (se houver - geralmente não devem ir para a imagem)
-.env*
+# .env*
