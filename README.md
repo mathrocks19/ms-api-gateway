@@ -39,3 +39,13 @@ Recebe requisições HTTP (ex: POST /user) e as envia via RPC/RabbitMQ.
 
 *   Envie `POST http://localhost:3000/user` (com JSON no body) via Postman.
 *   Verifique a resposta (`201 Created`), o banco MySQL (porta 3307) e o Mailtrap.
+
+
+  Teste body(Post) Postman 
+
+*   {
+  * "name": "Airton Soares",
+  * "email": "emailteste",
+  * "password": "teste123",
+  * "cellPhone": "21911112227"
+  * }
